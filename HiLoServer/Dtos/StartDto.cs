@@ -1,6 +1,6 @@
 namespace HiLoServer.Dtos;
 
-public class GuessDto
+public class StartDto
 {
     [Required]
     public string GameId { get; set; }
@@ -9,6 +9,5 @@ public class GuessDto
     public string PlayerId { get; set; }
 
     [Required]
-    [Range(0, int.MaxValue, ErrorMessage = "Please enter a value bigger than {0}")]
-    public int Guess { get; set; }
+    public string Response { get; set; }
 }

@@ -16,24 +16,22 @@ public class IterationsList : IIterationsList
 
         var iteration = new Iteration(gameId, playerId, guess, mysteryNumber);
 
-        if (concurrentBag.ContainsKey(key))
+        List<Iteration> list;
+        if (concurrentBag.TryGetValue(key, out list))
         {
-            List<Iteration> list;
-            if (concurrentBag.TryGetValue(key, out list))
-            {
-                list.Add(iteration);
-                concurrentBag.TryUpdate(key, list, null);
+            list.Add(iteration);
+            concurrentBag.TryUpdate(key, list, null);
 
-                return;
-            }
-
-            list = new List<Iteration>
-            {
-                iteration
-            };
-
-            concurrentBag.TryAdd(key, list);
+            return;
         }
+
+        list = new List<Iteration>
+        {
+            iteration
+        };
+
+        concurrentBag.TryAdd(key, list);
+        
     }
 
     public int Count(string gameId, string playerId)

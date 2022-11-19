@@ -1,34 +1,31 @@
-//using HiLoServer.Dtos;
-//using Microsoft.AspNetCore.Mvc;
+namespace HiLoServer.Controllers;
 
-//namespace HiLoServer.Controllers
-//{
-//    [ApiController]
-//    [Route("[controller]")]
-//    public class WeatherForecastController : ControllerBase
-//    {
-//        private static readonly string[] Summaries = new[]
-//        {
-//        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-//    };
+[ApiController]
+[AllowAnonymous]
+[Route("[controller]")]
+public class SessionController : ControllerBase
+{
+    private readonly ILogger<GameController> _logger;
 
-//        private readonly ILogger<WeatherForecastController> _logger;
+    public SessionController(ILogger<GameController> logger)
+    {
+        _logger = logger;
+    }
 
-//        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-//        {
-//            _logger = logger;
-//        }
 
-//        [HttpGet(Name = "GetWeatherForecast")]
-//        public IEnumerable<WeatherForecast> Get()
-//        {
-//            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-//            {
-//                Date = DateTime.Now.AddDays(index),
-//                TemperatureC = Random.Shared.Next(-20, 55),
-//                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-//            })
-//            .ToArray();
-//        }
-//    }
-//}
+    [HttpPost(Name = "Login")]
+    public ActionResult<string> Login([FromBody] string playerId)
+    {
+        try
+        {
+            var guid = Guid.NewGuid().ToString();
+
+            return guid;
+        }
+        catch(Exception ex)
+        {
+            _logger.LogError(ex, "Something went wrong while processing the Login request");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong while processing the Login request");      
+        }
+    }
+}

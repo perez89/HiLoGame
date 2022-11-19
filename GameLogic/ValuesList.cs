@@ -27,7 +27,7 @@ public class ValuesList : IValuesList
 
     public int GetNumber(string key)
     {
-        if (!concurrentBag.ContainsKey(key))
+        if (concurrentBag.ContainsKey(key))
         {
             return concurrentBag[key];
         }

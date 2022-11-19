@@ -1,5 +1,3 @@
-using GameLogic.Interfaces;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,11 +13,29 @@ builder.Services.AddSingleton<IValuesList, ValuesList>();
 builder.Services.AddScoped<IEngine, Engine>();
 builder.Services.AddScoped<IEngineList, EngineList>();
 
-//builder.Services.AddTransient<IValueGeneratorBase<int>, ValueGeneratorInt(1,2)>();
 
-builder.Services.AddTransient<IValueGeneratorBase<int>>(provider => new ValueGeneratorInt(1,100));
+builder.Services.AddTransient<IValueGeneratorBase<int>>(provider => new ValueGeneratorInt(int.Parse(builder.Configuration["RandomLimits:Min"]), int.Parse(builder.Configuration["RandomLimits:Max"])));
 
-//builder.Services.AddTransient<IValueGeneratorBase<int>>(new ValueGeneratorInt(1,100));
+
+//builder.Services.AddAuthentication(options =>
+//{
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+//}).AddJwtBearer(o =>
+//{
+//    o.TokenValidationParameters = new TokenValidationParameters
+//    {        
+//        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+//        ValidAudience = builder.Configuration["Jwt:Audience"],
+//        IssuerSigningKey = new SymmetricSecurityKey
+//        (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+//        ValidateIssuer = true,
+//        ValidateAudience = true,
+//        ValidateLifetime = false,
+//        ValidateIssuerSigningKey = true
+//    };
+//});
 
 var app = builder.Build();
 

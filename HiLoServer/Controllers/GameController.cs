@@ -1,16 +1,9 @@
-using GameLogic.Interfaces;
-
 namespace HiLoServer.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/[action]")]
 public class GameController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
     private readonly ILogger<GameController> _logger;
     private readonly IEngine _engine;
 
@@ -21,13 +14,42 @@ public class GameController : ControllerBase
     }
 
     [HttpGet(Name = "Guess")]
-    public string Get([FromBody]GuessDto guessDto)
+    public ActionResult<PlayDto> Guess(string gameId, string playerId, int guess)
     {
         try {
-            return _engine.CheckGuess(guessDto.GameId, guessDto.PlayerId, guessDto.Guess);
+            var (hasFinish, response) = _engine.CheckGuess(gameId, playerId, guess);
+
+            return new PlayDto
+            {
+                HasFinish = hasFinish,
+                Response = response
+            };
         }
-        catch {
-            return "Something went wrong while processing your request";
+        catch (Exception ex){
+            _logger.LogError(ex, "Something went wrong while processing the Guess request");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong while processing the Guess request");
         }        
+    }
+
+
+    [HttpGet(Name = "Start")]
+    public ActionResult<StartDto> Start(string playerId)
+    {
+        try
+        {
+            var (gameId, response) = _engine.StartGame(playerId);
+
+            return new StartDto
+            {
+                PlayerId = playerId,
+                GameId = gameId,
+                Response = response
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Something went wrong while processing the Start request");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong while processing the Start request");
+        }
     }
 }
