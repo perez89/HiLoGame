@@ -16,7 +16,6 @@ public class GameInitialization : IGameInitialization
 
     public async Task StartGame(string playerId, string token)
     {
-
         var httpRequestMessage = new HttpRequestMessage(
             HttpMethod.Get,
             $"https://localhost:7143/game/start?playerId={playerId}")
@@ -43,6 +42,7 @@ public class GameInitialization : IGameInitialization
         else
         {
             Console.WriteLine("Something went wrong while trying to Get token. " + httpResponseMessage.ToString());
+            _logger.LogWarning("Something went wrong while trying to Get token.");
         }
 
         var stopPlaying = _consoleKeepPlaying.GetResponse();

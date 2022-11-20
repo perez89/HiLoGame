@@ -1,6 +1,4 @@
-﻿
-
-namespace HiLoClient.Game;
+﻿namespace HiLoClient.Game;
 
 public class GamePlay : IGamePlay
 {
@@ -26,8 +24,7 @@ public class GamePlay : IGamePlay
             {
                 Headers =
                     {
-                        { HeaderNames.Authorization, $"Bearer {token}" },
-
+                        { HeaderNames.Authorization, $"Bearer {token}" }
                     }
             };
 
