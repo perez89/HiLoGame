@@ -12,7 +12,7 @@ And the player plays again.
 
 
 System Flow explainend
-A - User get authenticathion token;
+A - User get authenticathion token - JWT token;
 
 B - User starts to play with the system:
 	- first call will start the game, the user is associate with a mistery number and a new game is started. This is register in a List(fake DB table);
@@ -21,5 +21,7 @@ B - User starts to play with the system:
 	- when the user finds the number, the system returns a message saying that he got the right number and how many iterations were needed;
 
 C - the user can play another new game or exit from the console app;
+
+NOTE : The user cannot play the game without register and get a valid token from the server - Step A;
 
 ![Image alt text](Resources/hilo-flow.png?raw=true "HiLo game flow")
