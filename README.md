@@ -11,7 +11,7 @@ And the player plays again.
 4. The goal of the game is to discover the mystery number in a minimum of iterations.
 
 
-System Flow explainend
+System Flow:
 
 A - User get authenticathion token - JWT token;
 
