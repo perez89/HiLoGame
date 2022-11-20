@@ -1,4 +1,5 @@
 global using FluentAssertions;
+global using GameLogic;
 global using GameLogic.Interfaces;
 global using HiLoServer.Controllers;
 global using HiLoServer.Dtos;
