@@ -11,6 +11,7 @@ a. HI: the mystery number is > the player's guess
 b. LO: the mystery number is < the player's guess
 
 And the player plays again.
+
 4. The goal of the game is to discover the mystery number in a minimum of iterations.
 
 
