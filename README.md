@@ -12,6 +12,7 @@ And the player plays again.
 
 
 System Flow explainend
+
 A - User get authenticathion token - JWT token;
 
 
