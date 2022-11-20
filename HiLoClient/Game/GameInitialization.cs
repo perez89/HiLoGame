@@ -1,4 +1,4 @@
-﻿namespace HiLoClient;
+﻿namespace HiLoClient.Game;
 
 public class GameInitialization : IGameInitialization
 {
@@ -20,12 +20,12 @@ public class GameInitialization : IGameInitialization
         var httpRequestMessage = new HttpRequestMessage(
             HttpMethod.Get,
             $"https://localhost:7143/game/start?playerId={playerId}")
-        {
-            Headers =
-                {
-                    { HeaderNames.Authorization, $"Bearer {token}" }
-                }
-        };
+            {
+                Headers =
+                    {
+                        { HeaderNames.Authorization, $"Bearer {token}" }
+                    }
+            };
 
         var httpClient = _httpClientFactory.CreateClient();
 

@@ -1,4 +1,4 @@
-﻿namespace HiLoClient;
+﻿namespace HiLoClient.Game.Interfaces;
 
 public interface IGamePlay
 {

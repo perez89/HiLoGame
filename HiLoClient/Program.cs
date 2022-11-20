@@ -1,8 +1,5 @@
 ﻿# nullable disable
 
-
-using Microsoft.AspNetCore.Hosting;
-
 var host = CreateHostBuilder(args).Build();
 StartUp app = host.Services.GetRequiredService<StartUp>();
 

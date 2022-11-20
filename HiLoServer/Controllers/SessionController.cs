@@ -14,7 +14,6 @@ public class SessionController : ControllerBase
         _configRoot = configRoot;
     }
 
-
     [HttpPost(Name = "Login")]
     public ActionResult<string> Login([FromBody] string playerId)
     {

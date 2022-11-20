@@ -1,4 +1,4 @@
-﻿namespace HiLoClient.ConsoleCmds;
+﻿namespace HiLoClient.ConsoleCmds.Interfaces;
 
 public interface IConsoleKeepPlaying
 {

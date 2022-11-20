@@ -1,4 +1,6 @@
-﻿namespace HiLoClient;
+﻿
+
+namespace HiLoClient.Game;
 
 public class GamePlay : IGamePlay
 {
@@ -21,13 +23,13 @@ public class GamePlay : IGamePlay
         var httpRequestMessage = new HttpRequestMessage(
             HttpMethod.Get,
             $"https://localhost:7143/game/guess?gameId={gameId}&playerId={playerId}&guess={guess}")
-        {
-            Headers =
-                {
-                    { HeaderNames.Authorization, $"Bearer {token}" },
+            {
+                Headers =
+                    {
+                        { HeaderNames.Authorization, $"Bearer {token}" },
 
-                }
-        };
+                    }
+            };
 
         var httpClient = _httpClientFactory.CreateClient();
 

@@ -1,4 +1,4 @@
-﻿namespace HiLoClient;
+﻿namespace HiLoClient.Game;
 
 public class GameSession : IGameSession
 {
@@ -17,17 +17,7 @@ public class GameSession : IGameSession
 
     public async Task Start()
     {
-        //https://localhost:7143/Session
-        //var httpRequestMessage = new HttpRequestMessage(
-        //    HttpMethod.Post,
-        //    )
-        //{
-        //    //Headers =
-        //    //{
-        //    //    { HeaderNames.Accept, "application/vnd.github.v3+json" },
-        //    //    { HeaderNames.UserAgent, "HttpRequestsSample" }
-        //    //}
-        //};
+
         var playerId = _consolePlayerName.GetResponse();
 
         var token = await GetTokenAsync(playerId);
