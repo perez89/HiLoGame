@@ -9,9 +9,11 @@ public class ValuesList : IValuesList
         concurrentBag = new ConcurrentDictionary<string, int>();
     }
 
-    public void SetIfDoesNotExist(string key, int val) {
-        if (!concurrentBag.ContainsKey(key)) {
-            concurrentBag.TryAdd(key, val); 
+    public void SetIfDoesNotExist(string key, int val)
+    {
+        if (!concurrentBag.ContainsKey(key))
+        {
+            concurrentBag.TryAdd(key, val);
         }
     }
 

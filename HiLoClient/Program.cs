@@ -36,12 +36,13 @@ class StartUp
 
     public async void Initialize()
     {
-        try {
+        try
+        {
             await _gameSession.Start();
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Message}"); 
-        }       
+            Console.WriteLine($"{ex.Message}");
+        }
     }
 }

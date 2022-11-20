@@ -12,23 +12,25 @@ public class GamePlay : IGamePlay
         _consoleGuess = consoleGuess;
     }
 
-    public async Task Start(string gameId, string playerId, string token) {
+    public async Task Start(string gameId, string playerId, string token)
+    {
         Console.WriteLine("");
 
-        int guess = _consoleGuess.GetResponse();         
+        int guess = _consoleGuess.GetResponse();
 
         var httpRequestMessage = new HttpRequestMessage(
             HttpMethod.Get,
             $"https://localhost:7143/game/guess?gameId={gameId}&playerId={playerId}&guess={guess}")
         {
-            //Headers =
-            //{
-            //    { HeaderNames.Accept, "application/vnd.github.v3+json" },
-            //    { HeaderNames.UserAgent, "HttpRequestsSample" }
-            //}
+            Headers =
+                {
+                    { HeaderNames.Authorization, $"Bearer {token}" },
+
+                }
         };
 
         var httpClient = _httpClientFactory.CreateClient();
+
         var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
         if (httpResponseMessage.IsSuccessStatusCode)
@@ -45,10 +47,11 @@ public class GamePlay : IGamePlay
             if (!gameHasFinished)
                 await Start(gameId, playerId, token);
         }
-        else {
+        else
+        {
             _logger.LogWarning("Something went wrong while requesting the response from getting the guess.");
         }
 
-        return;                  
+        return;
     }
 }

@@ -6,12 +6,13 @@ public class EngineList : IEngineList
     private readonly IValueGeneratorBase<int> _valueGenerator;
 
     public EngineList(IValuesList valuesList, IValueGeneratorBase<int> valueGenerator)
-	{
-		_valuesList = valuesList;
+    {
+        _valuesList = valuesList;
         _valueGenerator = valueGenerator;
-    }    
+    }
 
-	public int GetValueFromPlayerGame(string playerId) {
+    public int GetValueFromPlayerGame(string playerId)
+    {
 
         var value = 0;
         if (_valuesList.Exist(playerId))

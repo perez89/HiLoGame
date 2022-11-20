@@ -1,6 +1,7 @@
 namespace HiLoServer.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("[controller]/[action]")]
 public class GameController : ControllerBase
 {
@@ -16,7 +17,8 @@ public class GameController : ControllerBase
     [HttpGet(Name = "Guess")]
     public ActionResult<PlayDto> Guess(string gameId, string playerId, int guess)
     {
-        try {
+        try
+        {
             var (hasFinish, response) = _engine.CheckGuess(gameId, playerId, guess);
 
             return new PlayDto
@@ -25,10 +27,11 @@ public class GameController : ControllerBase
                 Response = response
             };
         }
-        catch (Exception ex){
+        catch (Exception ex)
+        {
             _logger.LogError(ex, "Something went wrong while processing the Guess request");
             return StatusCode(StatusCodes.Status500InternalServerError, "Something went wrong while processing the Guess request");
-        }        
+        }
     }
 
 

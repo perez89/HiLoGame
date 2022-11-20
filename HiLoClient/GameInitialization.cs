@@ -10,41 +10,42 @@ public class GameInitialization : IGameInitialization
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
-        _gamePlay= gamePlay;
+        _gamePlay = gamePlay;
         _consoleKeepPlaying = consoleKeepPlaying;
     }
 
-    public async Task StartGame(string playerId, string token) {
-     
+    public async Task StartGame(string playerId, string token)
+    {
+
         var httpRequestMessage = new HttpRequestMessage(
             HttpMethod.Get,
             $"https://localhost:7143/game/start?playerId={playerId}")
         {
-            //Headers =
-            //{
-            //    { HeaderNames.Accept, "application/vnd.github.v3+json" },
-            //    { HeaderNames.UserAgent, "HttpRequestsSample" }
-            //}
+            Headers =
+                {
+                    { HeaderNames.Authorization, $"Bearer {token}" }
+                }
         };
+
         var httpClient = _httpClientFactory.CreateClient();
 
         var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
-        StartDto startDto = null;
         if (httpResponseMessage.IsSuccessStatusCode)
         {
             var contentString =
                 await httpResponseMessage.Content.ReadAsStringAsync();
 
-            startDto = JsonConvert.DeserializeObject<StartDto>(contentString);
+            var startDto = JsonConvert.DeserializeObject<StartDto>(contentString);
+            Console.WriteLine(startDto.Response);
+            await _gamePlay.Start(startDto.GameId, playerId, token);
+        }
+        else
+        {
+            Console.WriteLine("Something went wrong while trying to Get token. " + httpResponseMessage.ToString());
         }
 
-        Console.WriteLine(startDto.Response);
-
-
-        await _gamePlay.Start(startDto.GameId, playerId, token);        
-
-        var stopPlaying = _consoleKeepPlaying.GetResponse();       
+        var stopPlaying = _consoleKeepPlaying.GetResponse();
 
         if (!stopPlaying)
             await StartGame(playerId, token);

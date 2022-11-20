@@ -31,7 +31,7 @@ public class IterationsList : IIterationsList
         };
 
         concurrentBag.TryAdd(key, list);
-        
+
     }
 
     public int Count(string gameId, string playerId)
