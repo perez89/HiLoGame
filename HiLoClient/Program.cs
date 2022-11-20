@@ -1,46 +1,35 @@
 ﻿# nullable disable
 
-using HiLoClient;
+
+using Microsoft.AspNetCore.Hosting;
 
 var host = CreateHostBuilder(args).Build();
-Game app = host.Services.GetRequiredService<Game>();
+StartUp app = host.Services.GetRequiredService<StartUp>();
+
 static IHostBuilder CreateHostBuilder(string[] args)
 {
     return Host.CreateDefaultBuilder(args)
         .ConfigureServices(
             (_, services) => services
                 .AddHttpClient()
-                .AddSingleton<Game, Game>()
-                .AddSingleton<IAppConfig, AppConfig>()
+                .AddSingleton<StartUp, StartUp>()
                 .AddScoped<IGameSession, GameSession>()
                 .AddScoped<IGameInitialization, GameInitialization>()
-                .AddScoped<IGamePlay, GamePlay>());
+                .AddScoped<IGamePlay, GamePlay>()
+                .AddTransient<IConsolePlayerName, ConsolePlayerName>()
+                .AddTransient<IConsoleKeepPlaying, ConsoleKeepPlaying>()
+                .AddTransient<IConsoleGuess, ConsoleGuess>());
 }
 
 await host.RunAsync();
 
-interface IAppConfig
+class StartUp
 {
-    string Setting { get; }
-}
-class AppConfig : IAppConfig
-{
-    public string Setting { get; }
-    public AppConfig()
-    {
-        Console.WriteLine("AppConfig constructed");
-    }
-}
-class Game
-{
-    readonly IAppConfig config;
     readonly IGameSession _gameSession;
-    public Game(IAppConfig config, ILogger<Game> logger, IGameSession gameSession)
+    public StartUp(ILogger<StartUp> logger, IGameSession gameSession)
     {
-        this.config = config;
         _gameSession = gameSession;
         logger.Log(LogLevel.Information, "Application constructed");
-
 
         Initialize();
     }
@@ -55,5 +44,4 @@ class Game
             Console.WriteLine($"{ex.Message}"); 
         }       
     }
-
 }

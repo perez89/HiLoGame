@@ -5,10 +5,14 @@ public class GameSession : IGameSession
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<GameSession> _logger;
     private readonly IGameInitialization _gameInitialization;
-    public GameSession(ILogger<GameSession> logger, IHttpClientFactory httpClientFactory, IGameInitialization gameInitialization) {
+    private readonly IConsolePlayerName _consolePlayerName;
+
+    public GameSession(ILogger<GameSession> logger, IHttpClientFactory httpClientFactory, IGameInitialization gameInitialization, IConsolePlayerName consolePlayerName)
+    {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
         _gameInitialization = gameInitialization;
+        _consolePlayerName = consolePlayerName;
     }
 
     public async Task Start()
@@ -24,7 +28,7 @@ public class GameSession : IGameSession
         //    //    { HeaderNames.UserAgent, "HttpRequestsSample" }
         //    //}
         //};
-        var playerId = ConsoleCommands.GetPlayerName();
+        var playerId = _consolePlayerName.GetResponse();
 
         var token = await GetTokenAsync(playerId);
 

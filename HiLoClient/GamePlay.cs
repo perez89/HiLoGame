@@ -4,16 +4,18 @@ public class GamePlay : IGamePlay
 {
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<GameSession> _logger;
-    public GamePlay(ILogger<GameSession> logger, IHttpClientFactory httpClientFactory)
+    private readonly IConsoleGuess _consoleGuess;
+    public GamePlay(ILogger<GameSession> logger, IHttpClientFactory httpClientFactory, IConsoleGuess consoleGuess)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
+        _consoleGuess = consoleGuess;
     }
 
     public async Task Start(string gameId, string playerId, string token) {
         Console.WriteLine("");
 
-        int guess = ConsoleCommands.GetGuess();         
+        int guess = _consoleGuess.GetResponse();         
 
         var httpRequestMessage = new HttpRequestMessage(
             HttpMethod.Get,

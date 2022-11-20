@@ -5,12 +5,13 @@ public class GameInitialization : IGameInitialization
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<GameSession> _logger;
     private readonly IGamePlay _gamePlay;
-
-    public GameInitialization(ILogger<GameSession> logger, IHttpClientFactory httpClientFactory, IGamePlay gamePlay)
+    private readonly IConsoleKeepPlaying _consoleKeepPlaying;
+    public GameInitialization(ILogger<GameSession> logger, IHttpClientFactory httpClientFactory, IGamePlay gamePlay, IConsoleKeepPlaying consoleKeepPlaying)
     {
         _logger = logger;
         _httpClientFactory = httpClientFactory;
         _gamePlay= gamePlay;
+        _consoleKeepPlaying = consoleKeepPlaying;
     }
 
     public async Task StartGame(string playerId, string token) {
@@ -43,7 +44,7 @@ public class GameInitialization : IGameInitialization
 
         await _gamePlay.Start(startDto.GameId, playerId, token);        
 
-        var stopPlaying = ConsoleCommands.KeepPlaying();       
+        var stopPlaying = _consoleKeepPlaying.GetResponse();       
 
         if (!stopPlaying)
             await StartGame(playerId, token);
