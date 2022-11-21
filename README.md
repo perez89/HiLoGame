@@ -38,3 +38,5 @@ NOTE : The user cannot play the game without register and get a valid token from
 
 
 ![Image alt text](Resources/hilo-flow.png?raw=true "HiLo game flow")
+
+To run integrations tests please run "docker-compose up --build --abort-on-container-exit" cmd on the root folder
