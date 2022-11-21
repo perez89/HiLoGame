@@ -1,0 +1,28 @@
+﻿# To run locally: docker-compose up --build --abort-on-container-exit
+version: "3.7"
+services:
+  tests:
+    build:
+      context: .
+      target: test
+    image: image-test
+    command: >
+      bash -cxe "
+        /bin/wait-for.sh -t 600 hilo-serverx:80 -- echo hilo-server is ready
+        sleep 5
+        echo Running component tests...
+        dotnet test ./test/HiloIntegrationTests/HiloIntegrationTests.csproj"
+    environment:
+      INTEGRATIONTESTS: "true"
+      ENVIRONMENT: DEV
+    depends_on:
+      - hilo-serverx
+  hilo-serverx:
+    build: .
+    image: buildimage
+    logging:
+      driver: none
+    command: >
+      /bin/sh -cxe "
+        dotnet HiLoServer.dll
+        "

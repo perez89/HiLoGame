@@ -1,3 +1,5 @@
+//website used to get code to mock httpClientFactory/HttpClient
+//https://www.code4it.dev/blog/testing-httpclientfactory-moq
 namespace HiLo.UnitTests.HiLoClient;
 
 public class GamePlayUnitTests

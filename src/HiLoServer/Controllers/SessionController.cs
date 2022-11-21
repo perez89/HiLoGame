@@ -14,6 +14,11 @@ public class SessionController : ControllerBase
         _configRoot = configRoot;
     }
 
+    [HttpGet(Name = "Health")]
+    public string Health() {
+        return "ok";
+    }
+
     [HttpPost(Name = "Login")]
     public ActionResult<string> Login([FromBody] string playerId)
     {
